@@ -47,7 +47,7 @@
                                 Transaksi
                             </a>
                             <a class="nav-link" href="inventaris.php">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
                                 Inventaris
                             </a>
                             <a class="nav-link" href="laporan.php">
