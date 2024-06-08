@@ -96,7 +96,7 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Laporan Transaksi
+                                <a href = "laporantransaksi.php"> Laporan Transaksi</a>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -133,9 +133,7 @@
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2023</div>
                             <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
+
                             </div>
                         </div>
                     </div>
