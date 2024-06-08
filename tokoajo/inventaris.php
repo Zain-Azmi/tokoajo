@@ -1,3 +1,7 @@
+<?php
+require 'function.php'
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -67,30 +71,116 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Inventaris</h1>
+                        <br>
+                        <!-- Button to Open the Modal -->
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal">
+                            <i class="fa-solid fa-square-plus"></i>
+                             Tambahkan Produk
+                            </button>
+                            <br><br>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <!-- Button to Open the Modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                    Tambah Produk
-                                </button>
+                                <i class="fas fa-table me-1"></i>
+                                Daftar Produk                               
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
+                                            <th>Id</th>
                                             <th>Nama Produk</th>
                                             <th>Harga</th>
                                             <th>Stok</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                        <?php
+                                        $ambilsemuadataproduk = mysqli_query($koneksi,"SELECT * FROM produk");
+                                        $i = 1;
+                                        while($data=mysqli_fetch_array($ambilsemuadataproduk)){
+                                            $namaproduk = $data['namaproduk'];
+                                            $harga = $data['harga'];
+                                            $stok = $data['stok'];
+                                            $idproduk = $data['idproduk'];
+                                        ?>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                        </tr>
+                                            <td><?=$i++;?></td>
+                                            <td><?=$namaproduk;?></td>
+                                            <td><?=$harga;?></td>
+                                            <td><?=$stok;?></td>
+                                            <td>
+                                            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#edit<?=$idproduk;?>">
+                                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?=$idproduk;?>">
+                                            <i class="fa-solid fa-trash"></i> Hapus
+                                            </button>
+                                            </td>
+                                        </tr> 
+                                        
+                                            <!-- Edit Produk Modal -->
+                                            <div class="modal fade" id="edit<?=$idproduk;?>">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                    <h4 class="modal-title">Edit Produk</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="post">
+                                                    <div class="modal-body">
+                                                    <input type="text" name="namaproduk" value="<?=$namaproduk;?>" class="form-control" required>
+                                                    <br>
+                                                    <input type="number" name="harga" value="<?=$harga;?>" class="form-control" required>
+                                                    <br>
+                                                    <input type="number" name="stok" value="<?=$stok;?>" class="form-control" required>
+                                                    <br>
+                                                    <input type="hidden" name="idproduk" value="<?=$idproduk;?>">
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-warning" name="updateproduk">Update</button>
+                                                        </div>
+                                                    </div>
+                                                    </form>
+
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Hapus Produk Modal -->
+                                            <div class="modal fade" id="hapus<?=$idproduk;?>">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                    <h4 class="modal-title">Hapus Produk?</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="post">
+                                                    <div class="modal-body">
+                                                    Apakah anda yakin ingin menghapus produk <b>"<?=$namaproduk;?>"</b>?
+                                                    <input type="hidden" name="idproduk" value="<?=$idproduk;?>">
+                                                    <br><br>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger" name="hapusproduk">Hapus</button>
+                                                        </div>
+                                                    </div>
+                                                    </form>
+
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                        <?php
+                                        };
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -117,14 +207,14 @@
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 
-    <!-- The Modal -->
+    <!-- Tambahkan Produk Modal -->
     <div class="modal fade" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
 
         <!-- Modal Header -->
         <div class="modal-header">
-            <h4 class="modal-title">Tambah Produk</h4>
+            <h4 class="modal-title">Tambahkan Produk</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -137,14 +227,11 @@
             <br>
             <input type="number" name="stok" placeholder="Stok" class="form-control" required>
             <br>
-            <button type="submit" class="btn btn-primary" name="tambahprodukbaru">Tambahkan</button>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" name="tambahprodukbaru">Tambahkan</button>
+                </div>
             </div>
         </form>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        </div>
 
         </div>
     </div>
