@@ -45,11 +45,11 @@
                             <div class="sb-sidenav-menu-heading">Menu</div>
                             <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                                <b>Transaksi</b>
+                                Transaksi
                             </a>
                             <a class="nav-link" href="inventaris.php">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
-                                Inventaris
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
+                                <b>Inventaris</b>
                             </a>
                             <a class="nav-link" href="laporan.php">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
@@ -58,8 +58,8 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                        <div class="small">Login Sebagai:</div>
+                        Admin
                     </div>
                 </nav>
             </div>
@@ -67,74 +67,30 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Transaksi</h1>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                <!-- Button to Open the Modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                                    Tambah Produk
+                                </button>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>s
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>No</th>
+                                            <th>Nama Produk</th>
+                                            <th>Harga</th>
+                                            <th>Stok</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                         <tr>
                                             <td>Tiger Nixon</td>
                                             <td>System Architect</td>
                                             <td>Edinburgh</td>
                                             <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
                                         </tr>
-                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -157,10 +113,41 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
     </body>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Tambah Produk</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+         <form method="post">
+            <div class="modal-body">
+            <input type="text" name="namaproduk" placeholder="Nama Produk" class="form-control" required>
+            <br>
+            <input type="number" name="harga" placeholder="Harga" class="form-control" required>
+            <br>
+            <input type="number" name="stok" placeholder="Stok" class="form-control" required>
+            <br>
+            <button type="submit" class="btn btn-primary" name="tambahprodukbaru">Tambahkan</button>
+            </div>
+        </form>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+
+        </div>
+    </div>
+    </div>
+    
 </html>
