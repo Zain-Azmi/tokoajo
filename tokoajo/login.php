@@ -1,3 +1,35 @@
+<?php
+require 'function.php';
+
+// Cek Login
+$errorlogin = '';
+
+if (isset($_POST['login'])){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Cari User ke Database
+    $cekdatabase = mysqli_query($koneksi,"SELECT * from user WHERE username='$username' AND password='$password'");
+    // Hitung Jumlah Data
+    $hitung = mysqli_num_rows($cekdatabase);
+
+    if($hitung>0){
+        $_SESSION['log'] = 'True';
+        $_SESSION['username'] = $username;
+        header('location:index.php');
+    } else {
+        $errorlogin = 'Username atau Password salah.';
+    };
+};
+
+if(!isset($_SESSION['log'])){
+
+} else {
+    header('location:index.php');
+};
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,27 +52,26 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        <?php if ($errorlogin): ?>
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                                <strong>Perhatian!</strong> <?= $errorlogin; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <form method="post">
+                                            <br>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Email address</label>
+                                                <input class="form-control" name="username" id="inputUsername" type="text" placeholder="Username" />
+                                                <label for="inputEmail">Username</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
+                                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" />
                                                 <label for="inputPassword">Password</label>
                                             </div>
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                                <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
-                                            </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
-                                                <a class="btn btn-primary" href="index.html">Login</a>
+                                                <button class="btn btn-primary" name="login" href="index.html">Login</button>
                                             </div>
                                         </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
                                     </div>
                                 </div>
                             </div>
