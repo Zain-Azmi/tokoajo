@@ -1,3 +1,6 @@
+<?php
+require 'function.php'
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -78,19 +81,34 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
+                                            <th>ID Produk</th>
                                             <th>Nama Produk</th>
                                             <th>Harga</th>
-                                            <th>Stok</th>
+                                            <th>Jumlah</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                        </tr>
+                                       <?php
+                                       $get = mysqli_query($koneksi,"select * from detail_transaksi");
+
+
+                                       while ($p=mysqli_fetch_array($get)){
+                                        $idproduk=$p['idproduk'];
+                                        $namaproduk=$p['namaproduk'];
+                                        $harga=$p['harga'];
+                                        $jumlah=$p['jumlah']
+                                       ?>
+                                            <tr>
+                                                <td><?=$idproduk;?></td>
+                                                <td><?=$namaproduk;?></td>
+                                                <td><?=$harga;?></td>
+                                                <td><?=$jumlah;?></td>
+                                                <td>Edit Delete</td>
+                                            </tr>
+                                       <?php
+                                       };
+                                       ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -124,20 +142,31 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-            <h4 class="modal-title">Tambah Produk</h4>
+            <h4 class="modal-title">Tambah Barang</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <!-- Modal body -->
          <form method="post">
             <div class="modal-body">
-            <input type="text" name="namaproduk" placeholder="Nama Produk" class="form-control" required>
-            <br>
-            <input type="number" name="harga" placeholder="Harga" class="form-control" required>
-            <br>
-            <input type="number" name="stok" placeholder="Stok" class="form-control" required>
-            <br>
-            <button type="submit" class="btn btn-primary" name="tambahprodukbaru">Tambahkan</button>
+            Pilih Barang 
+            <select name="idpelanggan" class="form-control">
+            <?php
+            $getproduk = mysqli_query($koneksi,"select * from produk");
+            while ($produk=mysqli_fetch_array($getproduk)){
+                  $idproduk=$produk('idproduk');
+                  $namaproduk=$produk('namaproduk');
+                  $harga=$produk('harga');
+                  $stok=$produk('stok');
+            ?>
+            <option value="<?=$idproduk;?>"><?=$namaproduk;?>-<?=$harga;?><?=$stok;?></option>
+            <?php
+            };
+            ?>
+            </select>
+            
+            <input type="number" name="jumlah" class="form-control mt4" placeholder="Jumlah">
+            <button type="submit" class="btn btn-primary" name="tambahproduk">Tambahkan</button>
             </div>
         </form>
 
