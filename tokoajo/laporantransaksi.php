@@ -79,62 +79,37 @@ require 'function.php';
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>ID Produk</th>
-                                            <th>Nama Produk</th>
-                                            <th>Harga</th>
+                                            <th>ID Pesanan</th>
+                                            <th>Tanggal Pesanan</th>
                                             <th>Jumlah</th>
-                                            <th>Sub-Total</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                        <?php
-                                       $get = mysqli_query($koneksi,"select * from detail_transaksi");
-                                       
+                                       $get = mysqli_query($koneksi,"select * from transaksi");
+                                       $jumlahtotal = mysqli_query($koneksi,"sum(jumlah) from detail_transaksi");
 
                                        while ($p=mysqli_fetch_array($get)){
-                                        $idproduk=$p['idproduk'];
-                                        $namaproduk=$p['namaproduk'];
-                                        $harga=$p['harga'];
-                                        $jumlah=$p['jumlah'];
-                                        $subtotal=$jumlah*$harga;
+                                        $idtransaksi=$p['idtransaksi'];
+                                        $tanggal=$p['tanggal'];
                                        ?>
                                             <tr>
-                                                <td><?=$idproduk;?></td>
-                                                <td><?=$namaproduk;?></td>
-                                                <td>Rp <?=number_format($harga);?></td>
-                                                <td><?=number_format($jumlah);?></td>
-                                                <td>Rp <?=number_format($subtotal);?></td>
-                                                <td>Edit Hapus</td>
+                                                <td><?=$idtransaksi;?></td>
+                                                <td><?=$tanggal;?></td>
+                                                <td><?=$jumlahtotal;?></td>
+                                                <td>Tampilkan Hapus</td>
                                             </tr> 
                                        <?php
                                        };
                                        ?>
                                     </tbody>
                                 </table>
-                                <form method="post">
-                                <?php
-                                $getproduk = mysqli_query($koneksi,"select * from transaksi");
-                                $idtransaksii=1;
-                                while ($pr=mysqli_fetch_array($getproduk)){
-                                    $idtransaksi=$pr['idtransaksi'];
-                                    $tanggaltransaksi=$pr['tanggaltransaksi'];
-                                    $jumlahtransaksi=$pr['jumlahtransaksi'];
-
-                                };
-                                ?>
-                                <input type="hidden" name="idtransaksi" value="<?=$idtransaksi;?>">
-                                <input type="hidden" name="tanggaltransaksi" value="<?=$tanggaltransaksi;?>">
-                                <input type="hidden" name="jumlahtransaksi" value="<?=$jumlahtransaksi;?>">
-                                <button type="submit" class="btn btn-primary" name="tambahlaporantransaksi">Selesai Transaksi</button>
-                                </form>
                             </div>
-                            
                         </div>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
-                    
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; Your Website 2023</div>
@@ -170,6 +145,7 @@ require 'function.php';
             <select name="idpelanggan" class="form-control">
             <?php
             $getproduk = mysqli_query($koneksi,"select * from produk");
+            
             while ($pr=mysqli_fetch_array($getproduk)){
                   $idproduk=$pr['idproduk'];
                   $namaproduk=$pr['namaproduk'];
@@ -182,7 +158,6 @@ require 'function.php';
             ?>
             </select>
             <br>
-            <input type="hidden" name="idproduk" value="<?=$idtransaksi;?>">
             <input type="hidden" name="idproduk" value="<?=$idproduk;?>">
             <input type="hidden" name="namaproduk" value="<?=$namaproduk;?>">
             <input type="hidden" name="harga" value="<?=$harga;?>">
