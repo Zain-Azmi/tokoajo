@@ -1,5 +1,5 @@
 <?php
-require 'function.php'
+require 'function.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +23,6 @@ require 'function.php'
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
             <!-- Navbar-->
@@ -85,6 +83,7 @@ require 'function.php'
                                             <th>Nama Produk</th>
                                             <th>Harga</th>
                                             <th>Jumlah</th>
+                                            <th>Sub-Total</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -97,15 +96,17 @@ require 'function.php'
                                         $idproduk=$p['idproduk'];
                                         $namaproduk=$p['namaproduk'];
                                         $harga=$p['harga'];
-                                        $jumlah=$p['jumlah']
+                                        $jumlah=$p['jumlah'];
+                                        $subtotal=$jumlah*$harga;
                                        ?>
                                             <tr>
                                                 <td><?=$idproduk;?></td>
                                                 <td><?=$namaproduk;?></td>
-                                                <td><?=$harga;?></td>
-                                                <td><?=$jumlah;?></td>
-                                                <td>Edit Delete</td>
-                                            </tr>
+                                                <td>Rp <?=number_format($harga);?></td>
+                                                <td><?=number_format($jumlah);?></td>
+                                                <td>Rp <?=number_format($subtotal);?></td>
+                                                <td>Edit Hapus</td>
+                                            </tr> 
                                        <?php
                                        };
                                        ?>
@@ -135,6 +136,7 @@ require 'function.php'
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 
+ 
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
     <div class="modal-dialog">
@@ -142,31 +144,36 @@ require 'function.php'
 
         <!-- Modal Header -->
         <div class="modal-header">
-            <h4 class="modal-title">Tambah Barang</h4>
+            <h4 class="modal-title">Tambah Produk</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <!-- Modal body -->
          <form method="post">
             <div class="modal-body">
-            Pilih Barang 
+            Pilih Barang
             <select name="idpelanggan" class="form-control">
             <?php
             $getproduk = mysqli_query($koneksi,"select * from produk");
-            while ($produk=mysqli_fetch_array($getproduk)){
-                  $idproduk=$produk('idproduk');
-                  $namaproduk=$produk('namaproduk');
-                  $harga=$produk('harga');
-                  $stok=$produk('stok');
+            
+            while ($pr=mysqli_fetch_array($getproduk)){
+                  $idproduk=$pr['idproduk'];
+                  $namaproduk=$pr['namaproduk'];
+                  $harga=$pr['harga'];
+                  $stok=$pr['stok'];
             ?>
-            <option value="<?=$idproduk;?>"><?=$namaproduk;?>-<?=$harga;?><?=$stok;?></option>
+            <option value="<?=$idproduk;?>"><?=$namaproduk;?> - <?=$harga;?></option>
             <?php
             };
             ?>
             </select>
-            
-            <input type="number" name="jumlah" class="form-control mt4" placeholder="Jumlah">
-            <button type="submit" class="btn btn-primary" name="tambahproduk">Tambahkan</button>
+            <br>
+            <input type="hidden" name="idproduk" value="<?=$idproduk;?>">
+            <input type="hidden" name="namaproduk" value="<?=$namaproduk;?>">
+            <input type="hidden" name="harga" value="<?=$harga;?>">
+            <input type="number" name="jumlah" placeholder="Jumlah" class="form-control" required>
+            <br>
+            <button type="submit" class="btn btn-primary" name="tambahprodukkasir">Tambahkan</button>
             </div>
         </form>
 
@@ -178,5 +185,4 @@ require 'function.php'
         </div>
     </div>
     </div>
-    
 </html>

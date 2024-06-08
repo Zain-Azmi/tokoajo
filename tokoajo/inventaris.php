@@ -23,8 +23,6 @@ require 'function.php'
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
             <!-- Navbar-->
@@ -81,19 +79,33 @@ require 'function.php'
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
+                                            <th>Id Produk</th>
                                             <th>Nama Produk</th>
                                             <th>Harga</th>
                                             <th>Stok</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                        </tr>
+                                    <?php
+                                       $get = mysqli_query($koneksi,"select * from produk");
+
+                                       while ($p=mysqli_fetch_array($get)){
+                                        $idproduk=$p['idproduk'];
+                                        $namaproduk=$p['namaproduk'];
+                                        $harga=$p['harga'];
+                                        $stok=$p['stok']
+                                       ?>
+                                            <tr>
+                                                <td><?=$idproduk;?></td>
+                                                <td><?=$namaproduk;?></td>
+                                                <td><?=$harga;?></td>
+                                                <td><?=$stok;?></td>
+                                                <td>Edit Delete</td>
+                                            </tr>
+                                       <?php
+                                       };
+                                       ?>
                                     </tbody>
                                 </table>
                             </div>
