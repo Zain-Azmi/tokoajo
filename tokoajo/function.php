@@ -16,20 +16,19 @@ if(isset($_POST['tambahprodukbaru'])){
 
     $addtotable = mysqli_query($koneksi,"insert into produk (namaproduk, harga, stok) values('$namaproduk','$harga','$stok')");
     if ($addtotable){
-        header('location:index.php');
+        header('location:inventaris.php');
     } else {
         echo 'Gagal Menambahkan Barang';
     }
 }
-if(isset($_POST['tambahproduk'])){
-    $idtransaksi = $_POST['idtransaksi'];
+if(isset($_POST['tambahprodukkasir'])){
     $idproduk = $_POST['idproduk'];
     $namaproduk = $_POST['namaproduk'];
     $harga = $_POST['harga'];
     $jumlah = $_POST['jumlah'];
 
 
-    $addtotable = mysqli_query($koneksi,"insert into detail_pesanan (idtransaksi,idproduk,namaproduk, harga, jumlah) values('$idtransaksi','$idproduk','$namaproduk','$harga','$stok')");
+    $addtotable = mysqli_query($koneksi,"insert into detail_transaksi (idproduk,namaproduk, harga, jumlah) values('$idproduk','$namaproduk','$harga','$jumlah')");
     if ($addtotable){
         header('location:index.php');
     } else {
