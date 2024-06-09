@@ -74,6 +74,9 @@ require 'function.php';
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
                                     Tambah Produk
                                 </button>
+                                <a href="cetaktransaksi.php" class="btn btn-secondary" target="_blank">
+                            <i class="fa-solid fa-print"></i>
+                             Cetak Transaksi</a>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
