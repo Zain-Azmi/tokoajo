@@ -8,6 +8,11 @@ $dbpass = "";
 $dbname = "retail";
 $koneksi = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 
+$query = "SELECT * FROM idtransaksi ORDER BY nomor DESC LIMIT 1";
+$hasilidtransaksii = mysqli_query($koneksi, $query);
+$pidtransaksii=mysqli_fetch_array($hasilidtransaksii);
+$idtransaksii=$pidtransaksii['idtransaksii'];
+
 //Tambah Barang ke Inventaris
 if(isset($_POST['tambahprodukbaru'])){
     $namaproduk = $_POST['namaproduk'];
@@ -22,14 +27,13 @@ if(isset($_POST['tambahprodukbaru'])){
     }
 }
 if(isset($_POST['tambahprodukkasir'])){
-    $idtransaksi = $_POST['idtransaksi'];
     $idproduk = $_POST['idproduk'];
     $namaproduk = $_POST['namaproduk'];
     $harga = $_POST['harga'];
     $jumlah = $_POST['jumlah'];
 
 
-    $addtotable = mysqli_query($koneksi,"insert into detail_transaksi (idtransaksi,idproduk,namaproduk, harga, jumlah) values('$idtransaksi','$idproduk','$namaproduk','$harga','$jumlah')");
+    $addtotable = mysqli_query($koneksi,"insert into detail_transaksi (idtransaksii,idproduk,namaproduk, harga, jumlah) values('$idtransaksii','$idproduk','$namaproduk','$harga','$jumlah')");
     if ($addtotable){
         header('location:index.php');
     } else {
@@ -38,14 +42,11 @@ if(isset($_POST['tambahprodukkasir'])){
 
 }
 if(isset($_POST['tambahlaporantransaksi'])){
-    $jumlahtotal= $_POST['jumlahtransaksi'];
+    $angkaidtransaksii=$idtransaksii+1;
+    $addtotableidtransaksii = mysqli_query($koneksi,"insert into idtransaksi (idtransaksii) values('$angkaidtransaksii')");
 
-    $addtotable = mysqli_query($koneksi,"insert into transaksi (jumlahtransaksi) values('$jumlahtotal')");
-    if ($addtotable){
-        header('location:inventaris.php');
-        $idtransaksii++==1;
-    } else {
-        echo 'Gagal Menambahkan Barang';
-    }
+
+
 }
+
 ?>

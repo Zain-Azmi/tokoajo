@@ -89,7 +89,7 @@ require 'function.php';
                                     </thead>
                                     <tbody>
                                        <?php
-                                       $get = mysqli_query($koneksi,"select * from detail_transaksi");
+                                       $get = mysqli_query($koneksi,"SELECT * FROM detail_transaksi WHERE idtransaksii = (SELECT idtransaksii FROM idtransaksi ORDER BY nomor DESC LIMIT 1);");
                                        
 
                                        while ($p=mysqli_fetch_array($get)){
@@ -115,18 +115,15 @@ require 'function.php';
                                 <form method="post">
                                 <?php
                                 $getproduk = mysqli_query($koneksi,"select * from transaksi");
-                                $idtransaksii=1;
                                 while ($pr=mysqli_fetch_array($getproduk)){
-                                    $idtransaksi=$pr['idtransaksi'];
-                                    $tanggaltransaksi=$pr['tanggaltransaksi'];
                                     $jumlahtransaksi=$pr['jumlahtransaksi'];
 
                                 };
                                 ?>
-                                <input type="hidden" name="idtransaksi" value="<?=$idtransaksi;?>">
-                                <input type="hidden" name="tanggaltransaksi" value="<?=$tanggaltransaksi;?>">
+                                <input type="hidden" name="idtransaksii" value="<?=$idtransaksii;?>">
                                 <input type="hidden" name="jumlahtransaksi" value="<?=$jumlahtransaksi;?>">
                                 <button type="submit" class="btn btn-primary" name="tambahlaporantransaksi">Selesai Transaksi</button>
+                                
                                 </form>
                             </div>
                             
@@ -164,37 +161,52 @@ require 'function.php';
         </div>
 
         <!-- Modal body -->
-         <form method="post">
-            <div class="modal-body">
-            Pilih Barang
-            <select name="idpelanggan" class="form-control">
-            <?php
-            $getproduk = mysqli_query($koneksi,"select * from produk");
-            while ($pr=mysqli_fetch_array($getproduk)){
-                  $idproduk=$pr['idproduk'];
-                  $namaproduk=$pr['namaproduk'];
-                  $harga=$pr['harga'];
-                  $stok=$pr['stok'];
-            ?>
-            <option value="<?=$idproduk;?>"><?=$namaproduk;?> - <?=$harga;?></option>
-            <?php
-            };
-            ?>
-            </select>
-            <br>
-            <input type="hidden" name="idproduk" value="<?=$idtransaksi;?>">
-            <input type="hidden" name="idproduk" value="<?=$idproduk;?>">
-            <input type="hidden" name="namaproduk" value="<?=$namaproduk;?>">
-            <input type="hidden" name="harga" value="<?=$harga;?>">
-            <input type="number" name="jumlah" placeholder="Jumlah" class="form-control" required>
-            <br>
-            <button type="submit" class="btn btn-primary" name="tambahprodukkasir">Tambahkan</button>
-            </div>
-        </form>
+        <form method="post">
+    <div class="modal-body">
+        Pilih Barang
+        <select name="idproduk" id="produkSelect" class="form-control" required>
+        <?php
+        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk where idproduk not in (select idproduk from detail_transaksi where idtransaksii = (SELECT idtransaksii FROM idtransaksi ORDER BY nomor DESC LIMIT 1) );");
+        while ($pr = mysqli_fetch_array($getproduk)){
+            $idproduk = $pr['idproduk'];
+            $namaproduk = $pr['namaproduk'];
+            $harga = $pr['harga'];
+        ?>
+            <option value="<?=$idproduk;?>" data-namaproduk="<?=$namaproduk;?>" data-harga="<?=$harga;?>"><?=$namaproduk;?> - <?=$harga;?></option>
+        <?php
+        }
+        ?>
+        </select>
+        <br>
+        <input type="hidden" name="idtransaksii" id="idtransaksii" required>
+        <input type="hidden" name="namaproduk" id="namaproduk" required>
+        <input type="hidden" name="harga" id="harga" required>
+        <input type="number" name="jumlah" placeholder="Jumlah" class="form-control" required>
+        <br>
+        <button type="submit" class="btn btn-primary" name="tambahprodukkasir">Tambahkan</button>
+    </div>
+</form>
+
+<script>
+    document.getElementById('produkSelect').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var namaproduk = selectedOption.getAttribute('data-namaproduk');
+        var harga = selectedOption.getAttribute('data-harga');
+
+        document.getElementById('namaproduk').value = namaproduk;
+        document.getElementById('harga').value = harga;
+    });
+
+    // Trigger change event to set initial values
+    document.getElementById('produkSelect').dispatchEvent(new Event('change'));
+</script>
+
 
         <!-- Modal footer -->
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <form method="post">
+        </form>    
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
 
         </div>
