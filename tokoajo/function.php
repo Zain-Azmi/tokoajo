@@ -35,8 +35,8 @@ if($hitung < 1){
     // Jika ada duplikasi produk
     $row = mysqli_fetch_assoc($cekproduk);
     $namaprodukduplikasi = $row['namaproduk'];
-    $_SESSION['detikalertduplikasi'] = 5;
-    $_SESSION['duplikasiproduk'] = "Produk dengan nama <b>\"$namaprodukduplikasi\"</b> sudah ada. Pesan ini akan ditutup dalam <b>".$_SESSION['detikalertduplikasi']."</b> detik";
+    $_SESSION['detikalertduplikasi'] = 6;
+    $_SESSION['duplikasiproduk'] = "Produk dengan nama <b>\"$namaprodukduplikasi\"</b> sudah ada. Pesan ini akan ditutup dalam <b>".$_SESSION['detikalertduplikasi']."</b> detik.";
     }
 }
 

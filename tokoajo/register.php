@@ -4,7 +4,7 @@ require 'function.php';
 function showAlert($type, $message) {
     echo "<div class='alert alert-$type alert-dismissible fade show' role='alert'>
             $message
-            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+            <button type='button' class='btn-close' data-dismiss='alert' aria-label='Close'></button>
           </div>";
 }
 ?>
@@ -23,6 +23,11 @@ function showAlert($type, $message) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
+<style>
+    .inputsalah {
+    border-color: #dc3545 !important;
+    }
+</style>
 <body class="bg-primary">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
@@ -37,57 +42,68 @@ function showAlert($type, $message) {
                                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     $username = $_POST['username'];
                                     $password = $_POST['password'];
-                                    $confirmPassword = $_POST['confirmPassword'];
-                                
-                                    if ($password !== $confirmPassword) {
-                                        showAlert("danger", "Password dan konfirmasi password tidak sama.");
+                                    $konfirmasipassword = $_POST['confirmPassword'];
+
+                                    // Cek apakah username sudah ada
+                                    $sqlcheckusername = "SELECT username FROM user WHERE username=?";
+                                    $stmtcheckusername = $koneksi->prepare($sqlcheckusername);
+                                    $stmtcheckusername->bind_param("s", $username);
+                                    $stmtcheckusername->execute();
+                                    $stmtcheckusername->store_result();
+
+                                    if ($stmtcheckusername->num_rows > 0) {
+                                        showAlert("danger", "Username sudah ada.");
+                                        $usernamesalah = "inputsalah";
+                                        $passwordsalah = "";
                                     } else {
-                                        // Cek apakah username sudah ada
-                                        $sql = "SELECT username FROM user WHERE username=?";
-                                        $stmt = $koneksi->prepare($sql);
-                                        $stmt->bind_param("s", $username);
-                                        $stmt->execute();
-                                        $stmt->store_result();
-                                
-                                        if ($stmt->num_rows > 0) {
-                                            showAlert("danger", "Username sudah ada.");
+                                        // Jika username belum ada, lanjutkan ke validasi password
+                                        $usernamesalah = "";
+                                        if ($password !== $konfirmasipassword) {
+                                            showAlert("danger", "Password dan konfirmasi password tidak sama.");
+                                            $passwordsalah = "inputsalah";
                                         } else {
                                             // Tambahkan user baru
-                                            $sql = "INSERT INTO user (username, password) VALUES (?, ?)";
-                                            $stmt = $koneksi->prepare($sql);
-                                            $stmt->bind_param("ss", $username, $password);
-                                
-                                            if ($stmt->execute()) {
+                                            $sqlinsertuser = "INSERT INTO user (username, password) VALUES (?, ?)";
+                                            $stmtinsertuser = $koneksi->prepare($sqlinsertuser);
+                                            if (!$stmtinsertuser) {
+                                                die('Error: ' . $koneksi->error);
+                                            }
+                                            $stmtinsertuser->bind_param("ss", $username, $konfirmasipassword);
+
+                                            if ($stmtinsertuser->execute()) {
                                                 echo "<script type='text/javascript'>
                                                         window.location.href = 'login.php?success=1';
                                                     </script>";
                                             } else {
-                                                showAlert("danger", "Error: " . $sql . "<br>" . $koneksi->error);
+                                                showAlert("danger", "Error: " . $sqlinsertuser . "<br>" . $koneksi->error);
                                             }
                                         }
-                                
-                                        $stmt->close();
-                                        $koneksi->close();
                                     }
+
+                                    $stmtcheckusername->close();
+                                    if (isset($stmtinsertuser)) {
+                                        $stmtinsertuser->close();
+                                    }
+                                    $koneksi->close();
                                 }
                                 ?>
 
                                 <div class="card-body">
                                     <form method="post">
                                     <div class="form-floating mb-4">
-                                                <input class="form-control" name="username" id="inputUsername" type="text" placeholder="Username" required/>
+                                                <input class="form-control <?= $usernamesalah ?>" name="username" id="inputUsername" type="text" placeholder="Username" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '' ?>" required/>
                                                 <label for="inputEmail">Username</label>
                                             </div>
                                             <div class="form-floating mb-4">
-                                                <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" required/>
+                                                <input class="form-control <?= $passwordsalah ?>" name="password" id="inputPassword" type="password" placeholder="Password" required/>
                                                 <label for="inputPassword">Password</label>
                                             </div>
                                             <div class="form-floating mb-4">
-                                                <input class="form-control" name="confirmPassword" id="inputPassword" type="password" placeholder="confirmPassword" required/>
-                                                <label for="inputPassword">Konfirmasi Passwrord</label>
+                                                <input class="form-control <?= $passwordsalah ?>" name="confirmPassword" id="inputPassword" type="password" placeholder="confirmPassword" required/>
+                                                <label for="inputPassword">Konfirmasi Password</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <button class="btn btn-primary btn-block" name="register" type="submit">Buat Akun</button>
+                                                <button class="btn btn-primary btn-block" id="data-target" name="register" type="submit">Buat Akun</button>
                                                 <br><br>
                                             </div>
                                     </form>
