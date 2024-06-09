@@ -106,8 +106,71 @@ require 'function.php';
                                                 <td>Rp <?=number_format($harga);?></td>
                                                 <td><?=number_format($jumlah);?></td>
                                                 <td>Rp <?=number_format($subtotal);?></td>
-                                                <td>Edit Hapus</td>
+                                                <td>
+                                            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#edit<?=$idproduk;?>">
+                                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#hapus<?=$idproduk;?>">
+                                            <i class="fa-solid fa-trash"></i> Hapus
+                                            </button>
+                                            </td>
                                             </tr> 
+                                             <!-- Hapus Detail Transaksi Modal -->
+                                             <div class="modal fade" id="hapus<?=$idproduk;?>">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                    <h4 class="modal-title">Hapus Produk?</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="post">
+                                                    <div class="modal-body">
+                                                    Apakah anda yakin ingin menghapus produk <b>"<?=$namaproduk;?>"</b>?
+                                                    <input type="hidden" name="idproduk" value="<?=$idproduk;?>">
+                                                    <br><br>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-danger" name="hapusprodukdetailtransaksi">Hapus</button>
+                                                        </div>
+                                                    </div>
+                                                    </form>
+
+                                                </div>
+                                                </div>
+                                            </div>
+                                         <!-- Edit Detail Transaksi Modal -->
+                                         <div class="modal fade" id="edit<?=$idproduk;?>">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                    <h4 class="modal-title">Edit Produk</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="post">
+                                                    <div class="modal-body">
+                                                    Nama Produk
+                                                    <input type="text" name="namaproduk" value="<?=$namaproduk;?>" class="form-control" disabled>
+                                                    
+                                                    Jumlah
+                                                    <input type="number" name="jumlah" value="<?=$jumlah;?>" class="form-control" required>
+
+                                                    <input type="hidden" name="idproduk" value="<?=$idproduk;?>">
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-warning" name="updateprodukdetailtransaksi">Update</button>
+                                                        </div>
+                                                    </div>
+                                                    </form>
+
+                                                </div>
+                                                </div>
+                                            </div>
                                        <?php
                                        };
                                        ?>
@@ -144,7 +207,8 @@ require 'function.php';
         <script src="js/datatables-simple-demo.js"></script>
     </body>
 
- 
+                                       
+
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
     <div class="modal-dialog">

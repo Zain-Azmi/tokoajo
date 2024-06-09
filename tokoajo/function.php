@@ -32,6 +32,7 @@ if(isset($_POST['tambahprodukbaru'])){
         echo 'Gagal Menambahkan Barang';
     }
 }
+// Masukin Data Ke Tabel Detail Transaksi
 if(isset($_POST['tambahprodukkasir'])){
     $idproduk = $_POST['idproduk'];
     $namaproduk = $_POST['namaproduk'];
@@ -47,6 +48,7 @@ if(isset($_POST['tambahprodukkasir'])){
     }
 
 }
+// Masukin Data Ke Tabel Transaksi
 if(isset($_POST['tambahlaporantransaksi'])){
     $jumlahlaporan =$jumlahtransaksi;
     $idtransaksii = $_POST['idtransaksii'];
@@ -61,5 +63,34 @@ if(isset($_POST['tambahlaporantransaksi'])){
     }
 
 }
+// Menghapus Barang dari detail transaksi
+if(isset($_POST['hapusprodukdetailtransaksi'])){
+    $idproduk = $_POST['idproduk'];
 
+    $hapus = mysqli_query($koneksi,"DELETE FROM detail_transaksi WHERE idproduk='$idproduk'and idtransaksii=(SELECT idtransaksii FROM detail_transaksi ORDER BY idtransaksii DESC LIMIT 1);");
+    if ($hapus){
+        header('location:index.php');
+    } else {
+        echo "<script type='text/javascript'>
+                alert('Gagal Menghapus Produk!');
+                window.location.href = 'index.php';
+             </script>";
+    }
+}
+// Update Jumlah Barang Transaksi
+if(isset($_POST['updateprodukdetailtransaksi'])){
+    $idproduk = $_POST['idproduk'];
+    $namaproduk = $_POST['namaproduk'];
+    $jumlah = $_POST['jumlah'];
+
+    $update = mysqli_query($koneksi,"UPDATE detail_transaksi SET jumlah='$jumlah'WHERE idproduk='$idproduk'and idtransaksii=(SELECT idtransaksii FROM detail_transaksi ORDER BY idtransaksii DESC LIMIT 1);");
+    if ($update){
+        header('location:index.php');
+    } else {
+        echo "<script type='text/javascript'>
+                alert('Gagal Meng-Update Produk!');
+                window.location.href = 'index.php';
+             </script>";
+    }
+}
 ?>
