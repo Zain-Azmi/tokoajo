@@ -74,9 +74,9 @@ require 'cek.php';
                             <i class="fa-solid fa-square-plus"></i>
                              Tambahkan Produk
                             </button>
-                            <a href="ekspor.php" class="btn btn-secondary" target="_blank">
+                            <a href="cetakdataproduk.php" class="btn btn-secondary" target="_blank">
                             <i class="fa-solid fa-print"></i>
-                             Ekspor Data</a>
+                             Cetak Data Produk</a>
                             <br><br>
 
                         <!-- Modal Duplikasi Produk -->
