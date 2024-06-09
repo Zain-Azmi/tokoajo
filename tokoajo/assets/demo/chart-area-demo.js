@@ -9,29 +9,38 @@ function loadData() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             try {
-                var databulan = JSON.parse(xhr.responseText);
-                console.log('Data received:', databulan); // Debugging: Log data yang diterima
+                var data = JSON.parse(xhr.responseText);
+                console.log('Data received:', data); // Debugging: Log data yang diterima
 
-                if (databulan.error) {
-                    console.error('Error:', databulan.error);
+                if (data.error) {
+                    console.error('Error:', data.error);
                     return;
                 }
 
-                var labels = databulan.map(function(item) { return item.bulan; });
-                var totalPembelian = databulan.map(function(item) { return item.total_pembelian; });
+                var labels = data.map(function(item) { return item.bulan; });
+                var totalPembelian = data.map(function(item) { return item.total_pembelian; });
 
-                // Membuat diagram garis
-                var ctx = document.getElementById("myLineChart").getContext("2d");
-                var myLineChart = new Chart(ctx, {
+                // Membuat diagram batang
+                var ctx = document.getElementById("DiagramBar").getContext("2d");
+                var DiagramBar = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: "Total Pembelian per Bulan",
+                            label: "Total Pembelian per Hari",
+                            lineTension: 0.3,
                             backgroundColor: "rgba(2,117,216,0.2)",
                             borderColor: "rgba(2,117,216,1)",
+                            pointRadius: 5,
+                            pointBackgroundColor: "rgba(2,117,216,1)",
+                            pointBorderColor: "rgba(255,255,255,0.8)",
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                            pointHitRadius: 50,
+                            pointBorderWidth: 2,
+
                             data: totalPembelian,
-                            fill: true,
+                            
                         }],
                     },
                     options: {
@@ -41,7 +50,7 @@ function loadData() {
                                     display: false
                                 },
                                 ticks: {
-                                    maxTicksLimit: 12
+                                    maxTicksLimit: 10
                                 }
                             }],
                             yAxes: [{

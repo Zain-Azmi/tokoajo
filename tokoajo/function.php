@@ -95,9 +95,10 @@ if(isset($_POST['updateprodukdetailtransaksi'])){
 }
 //ambil data buat diagram perhari
 
-$sql = "SELECT tanggaltransaksi, SUM(jumlahtransaksi) as total_pembelian
+$sql = "SELECT DATE_FORMAT(tanggaltransaksi, '%Y-%m') as bulan, SUM(jumlahtransaksi) as total_pembelian
         FROM transaksi
-        GROUP BY tanggaltransaksi";
+        GROUP BY bulan
+        ORDER BY bulan";
 $result = $koneksi->query($sql);
 
 $data = array();
@@ -108,7 +109,6 @@ if ($result->num_rows > 0) {
     }
 } else {
     echo json_encode(['error' => 'No data found']); // Jika tidak ada hasil, kirimkan pesan error
-    exit;
 }
 
 

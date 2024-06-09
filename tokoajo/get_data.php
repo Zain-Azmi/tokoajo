@@ -1,24 +1,31 @@
 <?php
-include 'function.php';
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "";
+$dbname = "retail";
+$koneksi = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 
-$sqlbulan= "SELECT DATE_FORMAT(tanggaltransaksi, '%Y-%m') as bulan, SUM(jumlahtransaksi) as total_pembelian
-        FROM transaksi
-        GROUP BY bulan
-        ORDER BY bulan";
-$resultbulan = $koneksi->query($sqlbulan);
 
-$databulan = array();
+$sql = "SELECT DATE(tanggaltransaksi) as tanggal, SUM(jumlahtransaksi) as total_pembelian
+        FROM detail_transaksi
+        GROUP BY tanggal
+        ORDER BY tanggal";
+$result = $koneksi->query($sql);
 
-if ($resultbulan->num_rows > 0) {
-    while($rowbulan = $resultbulannulsn->fetch_assoc()) {
-        $databulan[] = $rowbulan;
+$datahari = array();
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $datahari[] = $row;
     }
 } else {
     echo json_encode(['error' => 'No data found']); // Jika tidak ada hasil, kirimkan pesan error
     exit;
 }
 
-$koneksi->close();
 
-echo json_encode($databulan);
+// Untuk debugging, tambahkan echo untuk melihat output di browser
+echo json_encode($datahari);
 ?>
+
+

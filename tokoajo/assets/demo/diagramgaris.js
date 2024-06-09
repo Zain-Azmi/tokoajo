@@ -17,20 +17,30 @@ function loadData() {
                     return;
                 }
 
-                var labels = data.map(function(item) { return item.tanggaltransaksi; });
+                var labels = data.map(function(item) { return item.bulan; });
                 var totalPembelian = data.map(function(item) { return item.total_pembelian; });
 
                 // Membuat diagram batang
-                var ctx = document.getElementById("myBarChart").getContext("2d");
-                var myBarChart = new Chart(ctx, {
-                    type: 'bar',
+                var ctx = document.getElementById("DiagramGaris").getContext("2d");
+                var DiagramGaris = new Chart(ctx, {
+                    type: 'line',
                     data: {
                         labels: labels,
                         datasets: [{
                             label: "Total Pembelian per Hari",
-                            backgroundColor: "rgba(2,117,216,1)",
+                            lineTension: 0.3,
+                            backgroundColor: "rgba(2,117,216,0.2)",
                             borderColor: "rgba(2,117,216,1)",
+                            pointRadius: 5,
+                            pointBackgroundColor: "rgba(2,117,216,1)",
+                            pointBorderColor: "rgba(255,255,255,0.8)",
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                            pointHitRadius: 50,
+                            pointBorderWidth: 2,
+
                             data: totalPembelian,
+                            
                         }],
                     },
                     options: {
