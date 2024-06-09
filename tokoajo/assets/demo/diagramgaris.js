@@ -5,7 +5,7 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 // Fungsi untuk mengambil data dari get_data.php
 function loadDatagaris() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'function.php', true);
+    xhr.open('GET', 'ambildata.php', true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             try {
