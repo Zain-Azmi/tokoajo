@@ -80,7 +80,7 @@
                                         <i class="fas fa-chart-area me-1"></i>
                                         Laporan Bulanan
                                     </div>
-                                    <div class="card-body"><canvas id="DiagramGaris" width="100%" height="40"></canvas></div>
+                                    <div class="card-body"><canvas id="DiagramBar" width="100%" height="40"></canvas></div>
                                 </div>
                             </div>
                             <div class="col-xl-6">
@@ -159,7 +159,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/diagrambar.js"></script>
         <script src="assets/demo/diagramgaris.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>

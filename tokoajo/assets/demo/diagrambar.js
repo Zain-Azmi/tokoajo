@@ -3,44 +3,33 @@ Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSyste
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Fungsi untuk mengambil data dari get_data.php
+// Fungsi untuk mengambil data dari get_data.php
 function loadData() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'get_data.php', true);
+    xhr.open('GET', 'function.php', true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             try {
-                var data = JSON.parse(xhr.responseText);
-                console.log('Data received:', data); // Debugging: Log data yang diterima
+                var data_combined = JSON.parse(xhr.responseText);
+                console.log('Data received:', data_combined); // Debugging: Log data yang diterima
 
-                if (data.error) {
-                    console.error('Error:', data.error);
-                    return;
-                }
+                // Menggunakan data bulan dari data_combined
+                var bulanData = data_combined.bulan;
 
-                var labels = data.map(function(item) { return item.bulan; });
-                var totalPembelian = data.map(function(item) { return item.total_pembelian; });
+                var labels = bulanData.map(function(item) { return item.bulan; });
+                var totalPembelian = bulanData.map(function(item) { return item.total_pembelian; });
 
                 // Membuat diagram batang
                 var ctx = document.getElementById("DiagramBar").getContext("2d");
                 var DiagramBar = new Chart(ctx, {
-                    type: 'line',
+                    type: 'bar',
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: "Total Pembelian per Hari",
-                            lineTension: 0.3,
+                            label: "Total Pembelian per Bulan",
                             backgroundColor: "rgba(2,117,216,0.2)",
                             borderColor: "rgba(2,117,216,1)",
-                            pointRadius: 5,
-                            pointBackgroundColor: "rgba(2,117,216,1)",
-                            pointBorderColor: "rgba(255,255,255,0.8)",
-                            pointHoverRadius: 5,
-                            pointHoverBackgroundColor: "rgba(2,117,216,1)",
-                            pointHitRadius: 50,
-                            pointBorderWidth: 2,
-
                             data: totalPembelian,
-                            
                         }],
                     },
                     options: {
