@@ -93,4 +93,26 @@ if(isset($_POST['updateprodukdetailtransaksi'])){
              </script>";
     }
 }
+//ambil data buat diagram perhari
+
+$sql = "SELECT tanggaltransaksi, SUM(jumlahtransaksi) as total_pembelian
+        FROM transaksi
+        GROUP BY tanggaltransaksi";
+$result = $koneksi->query($sql);
+
+$data = array();
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+} else {
+    echo json_encode(['error' => 'No data found']); // Jika tidak ada hasil, kirimkan pesan error
+    exit;
+}
+
+
+echo json_encode($data);
+
+
 ?>

@@ -2,53 +2,75 @@
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
-// Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ["Mar 1", "Mar 2", "Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7", "Mar 8", "Mar 9", "Mar 10", "Mar 11", "Mar 12", "Mar 13"],
-    datasets: [{
-      label: "Sessions",
-      lineTension: 0.3,
-      backgroundColor: "rgba(2,117,216,0.2)",
-      borderColor: "rgba(2,117,216,1)",
-      pointRadius: 5,
-      pointBackgroundColor: "rgba(2,117,216,1)",
-      pointBorderColor: "rgba(255,255,255,0.8)",
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: "rgba(2,117,216,1)",
-      pointHitRadius: 50,
-      pointBorderWidth: 2,
-      data: [10000, 30162, 26263, 18394, 18287, 28682, 31274, 33259, 25849, 24159, 32651, 31984, 38451],
-    }],
-  },
-  options: {
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'date'
-        },
-        gridLines: {
-          display: false
-        },
-        ticks: {
-          maxTicksLimit: 7
+// Fungsi untuk mengambil data dari get_data.php
+function loadData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'get_data.php', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            try {
+                var databulan = JSON.parse(xhr.responseText);
+                console.log('Data received:', databulan); // Debugging: Log data yang diterima
+
+                if (databulan.error) {
+                    console.error('Error:', databulan.error);
+                    return;
+                }
+
+                var labels = databulan.map(function(item) { return item.bulan; });
+                var totalPembelian = databulan.map(function(item) { return item.total_pembelian; });
+
+                // Membuat diagram garis
+                var ctx = document.getElementById("myLineChart").getContext("2d");
+                var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Total Pembelian per Bulan",
+                            backgroundColor: "rgba(2,117,216,0.2)",
+                            borderColor: "rgba(2,117,216,1)",
+                            data: totalPembelian,
+                            fill: true,
+                        }],
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 12
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: Math.max.apply(null, totalPembelian) + 50000, // Sesuaikan maksimum dengan data
+                                    maxTicksLimit: 5
+                                },
+                                gridLines: {
+                                    display: true
+                                }
+                            }],
+                        },
+                        legend: {
+                            display: false
+                        }
+                    }
+                });
+            } catch (e) {
+                console.error('Failed to parse JSON:', e);
+            }
+        } else if (xhr.readyState === 4) {
+            console.error('Failed to load data:', xhr.status, xhr.statusText);
         }
-      }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 40000,
-          maxTicksLimit: 5
-        },
-        gridLines: {
-          color: "rgba(0, 0, 0, .125)",
-        }
-      }],
-    },
-    legend: {
-      display: false
-    }
-  }
+    };
+    xhr.send();
+}
+
+// Memuat data setelah halaman selesai dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    loadData();
 });
