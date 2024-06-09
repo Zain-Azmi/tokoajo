@@ -27,9 +27,10 @@ function loadData() {
                         labels: labels,
                         datasets: [{
                             label: "Total Pembelian per Bulan",
-                            backgroundColor: "rgba(2,117,216,0.2)",
+                            backgroundColor: "rgba(2,117,216,1)",
                             borderColor: "rgba(2,117,216,1)",
                             data: totalPembelian,
+                            fill:true
                         }],
                     },
                     options: {
