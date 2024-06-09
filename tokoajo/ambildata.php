@@ -1,4 +1,10 @@
 <?php
+//Konek ke Database
+$dbhost = "localhost";
+$dbuser = "root";
+$dbpass = "";
+$dbname = "retail";
+$koneksi = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 // Mengambil data pembelian per bulan
 $sql = "SELECT DATE_FORMAT(tanggaltransaksi, '%Y-%m') as bulan, SUM(jumlahtransaksi) as total_pembelian
         FROM transaksi

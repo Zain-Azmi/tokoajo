@@ -14,7 +14,7 @@ require 'function.php';
 <body>
 <div class="container">
     <br>
-    <h2>Data Produk Toko Ajo Lpn</h2>
+    <h2>Transaksi Toko Ajo Lpn</h2>
     <br>
     <div class="data-tables datatable-dark">
         <table id="datatablesSimple" class="display">
@@ -29,13 +29,18 @@ require 'function.php';
             </thead>
             <tbody>
                 <?php
-                $get = mysqli_query($koneksi, "SELECT * FROM detail_transaksi WHERE idtransaksii = (SELECT idtransaksii FROM idtransaksi ORDER BY nomor DESC LIMIT 1);");
-                while ($p = mysqli_fetch_array($get)) {
-                    $idproduk = $p['idproduk'];
-                    $namaproduk = $p['namaproduk'];
-                    $harga = $p['harga'];
-                    $jumlah = $p['jumlah'];
-                    $subtotal = $harga * $jumlah;
+                $get = mysqli_query($koneksi,"SELECT * FROM detail_transaksi WHERE idtransaksii = (SELECT idtransaksii FROM idtransaksi ORDER BY nomor DESC LIMIT 1);");
+                $jumlahtransaksikasir=0;
+                $tulisanjumlahtransaksikasir="Rp 0";
+                while ($p=mysqli_fetch_array($get)){
+                $idproduk=$p['idproduk'];
+                $namaproduk=$p['namaproduk'];
+                $harga=$p['harga'];
+                $jumlah=$p['jumlah'];
+                $subtotal=$harga*$jumlah;
+                $jumlahtransaksikasir+=$subtotal;
+                $numjumlahtransaksikasir=number_format($jumlahtransaksikasir);
+                $tulisanjumlahtransaksikasir="Rp " . (string)$numjumlahtransaksikasir;
                 ?>
                 <tr>
                     <td><?=$idproduk;?></td>
@@ -49,6 +54,10 @@ require 'function.php';
                 ?>
             </tbody>
         </table>
+        <form>
+        <h4>Jumlah Pembayaran</h4>
+        <input type="text" name="tulisanjumlahtransaksi" value="<?=$tulisanjumlahtransaksikasir;?>"disabled>
+        </form>
     </div>
 </div>
 
