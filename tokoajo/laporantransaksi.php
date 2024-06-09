@@ -67,42 +67,49 @@ require 'function.php';
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Transaksi</h1>
+                        <h1 class="mt-4">Laporan Transaksi</h1>
                         <div class="card mb-4">
-                            <div class="card-header">
-                                <!-- Button to Open the Modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                    Tambah Produk
-                                </button>
-                            </div>
+
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>ID Pesanan</th>
-                                            <th>Tanggal Pesanan</th>
-                                            <th>Jumlah</th>
-                                            <th>Aksi</th>
+                                            <th>IDTransaksi</th>
+                                            <th>Tanggal</th>
+                                            <th>Jumlah Transaksi</th>
+
                                         </tr>
                                     </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>IDTransaksi</th>
+                                            <th>Tanggal</th>
+                                            <th>Jumlah Transaksi</th>
+                                        </tr>
+                                    </tfoot>
                                     <tbody>
-                                       <?php
-                                       $get = mysqli_query($koneksi,"select * from transaksi");
-                                       $jumlahtotal = mysqli_query($koneksi,"sum(jumlah) from detail_transaksi");
-
-                                       while ($p=mysqli_fetch_array($get)){
-                                        $idtransaksi=$p['idtransaksi'];
-                                        $tanggal=$p['tanggal'];
+                                    <?php
+                                    $dbhost = "localhost";
+                                    $dbuser = "root";
+                                    $dbpass = "";
+                                    $dbname = "retail";
+                                    $koneksi = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+                                       $laporantransaksi = mysqli_query($koneksi,"SELECT * FROM transaksi;");
+                                       while ($plaporantransaksi=mysqli_fetch_array($laporantransaksi)){
+                                        $idtransaksi=$plaporantransaksi['idtransaksii'];
+                                        $tanggal=$plaporantransaksi['tanggaltransaksi'];
+                                        $jumlaht=$plaporantransaksi['jumlahtransaksi'];
+                                    
                                        ?>
                                             <tr>
                                                 <td><?=$idtransaksi;?></td>
                                                 <td><?=$tanggal;?></td>
-                                                <td><?=$jumlahtotal;?></td>
-                                                <td>Tampilkan Hapus</td>
+                                                <td>Rp <?=number_format($jumlaht);?></td>
                                             </tr> 
                                        <?php
                                        };
                                        ?>
+                                        
                                     </tbody>
                                 </table>
                             </div>
