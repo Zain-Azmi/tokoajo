@@ -45,9 +45,9 @@ $tulisanjumlahtransaksikasir = $_SESSION['tulisanjumlahtransaksikasir'];
                 <tr>
                     <td><?=$idproduk;?></td>
                     <td><?=$namaproduk;?></td>
-                    <td>Rp <?php echo $harga;?></td>
+                    <td>Rp <?php echo number_format($harga);?></td>
                     <td><?php echo $jumlah;?></td>
-                    <td>Rp <?php echo $subtotal;?></td>
+                    <td>Rp <?php echo number_format($subtotal);?></td>
                 </tr>
                 <?php
                 };

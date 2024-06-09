@@ -29,12 +29,9 @@ require 'cek.php';
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-power-off"></i> | Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -47,11 +44,11 @@ require 'cek.php';
                             <div class="sb-sidenav-menu-heading">Menu</div>
                             <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                                Transaksi
+                                <b>Transaksi</b>
                             </a>
                             <a class="nav-link" href="inventaris.php">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
-                                <b>Inventaris</b>
+                                Inventaris
                             </a>
                             <a class="nav-link" href="laporan.php">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
@@ -208,7 +205,7 @@ require 'cek.php';
                     
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div class="text-muted">Copyright &copy; Your Website 2024</div>
                             <div>
                             </div>
                         </div>
