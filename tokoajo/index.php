@@ -91,6 +91,7 @@ require 'function.php';
                                        <?php
                                        $get = mysqli_query($koneksi,"SELECT * FROM detail_transaksi WHERE idtransaksii = (SELECT idtransaksii FROM idtransaksi ORDER BY nomor DESC LIMIT 1);");
                                        $jumlahtransaksikasir=0;
+                                       $tulisanjumlahtransaksikasir="Rp 0";
                                        while ($p=mysqli_fetch_array($get)){
                                         $idproduk=$p['idproduk'];
                                         $namaproduk=$p['namaproduk'];
@@ -98,6 +99,8 @@ require 'function.php';
                                         $jumlah=$p['jumlah'];
                                         $subtotal=$harga*$jumlah;
                                         $jumlahtransaksikasir+=$subtotal;
+                                        $numjumlahtransaksikasir=number_format($jumlahtransaksikasir);
+                                        $tulisanjumlahtransaksikasir="Rp " . (string)$numjumlahtransaksikasir;
                                     
                                        ?>
                                             <tr>
@@ -177,9 +180,11 @@ require 'function.php';
                                     </tbody>
                                 </table>
                                 <form method="post">
-                                
+                                <h4>Jumlah Pembayaran</h4>
                                 <input type="hidden" name="idtransaksii" value="<?=$idtransaksii;?>">
-                                <input type="number" name="jumlahtransaksi" value="<?=$jumlahtransaksikasir;?>"disabled>
+                                <input type="hidden" name="jumlahtransaksi" value="<?=$jumlahtransaksikasir;?>"disabled>
+                                <input type="text" name="tulisanjumlahtransaksi" value="<?=$tulisanjumlahtransaksikasir;?>"disabled>
+                                <br>
                                 <br>
                                 <button type="submit" class="btn btn-primary" name="tambahlaporantransaksi">Selesai Transaksi</button>
                                 
