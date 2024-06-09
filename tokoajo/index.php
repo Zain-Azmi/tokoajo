@@ -187,6 +187,9 @@ require 'function.php';
                                 <input type="hidden" name="idtransaksii" value="<?=$idtransaksii;?>">
                                 <input type="hidden" name="jumlahtransaksi" value="<?=$jumlahtransaksikasir;?>"disabled>
                                 <input type="text" name="tulisanjumlahtransaksi" value="<?=$tulisanjumlahtransaksikasir;?>"disabled>
+                                <?php
+                                $_SESSION['tulisanjumlahtransaksikasir'] = $tulisanjumlahtransaksikasir;
+                                ?>
                                 <br>
                                 <br>
                                 <button type="submit" class="btn btn-primary" name="tambahlaporantransaksi">Selesai Transaksi</button>
