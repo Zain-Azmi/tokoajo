@@ -68,6 +68,10 @@ require 'function.php';
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Laporan Transaksi</h1>
+                        <a href="cetaklaporantransaksi.php" class="btn btn-secondary" target="_blank">
+                            <i class="fa-solid fa-print"></i>
+                             Cetak Laporan Transaksi</a>
+                             <br><br>
                         <div class="card mb-4">
 
                             <div class="card-body">
@@ -80,13 +84,6 @@ require 'function.php';
 
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>IDTransaksi</th>
-                                            <th>Tanggal</th>
-                                            <th>Jumlah Transaksi</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                     <?php
                                     $dbhost = "localhost";
