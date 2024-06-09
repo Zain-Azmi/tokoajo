@@ -116,11 +116,27 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2011/04/25</td>
-                                            <td>32000</td>
-                                        </tr>
+                                    <?php
+                                    $dbhost = "localhost";
+                                    $dbuser = "root";
+                                    $dbpass = "";
+                                    $dbname = "retail";
+                                    $koneksi = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+                                       $laporantransaksi = mysqli_query($koneksi,"SELECT * FROM transaksi;");
+                                       while ($plaporantransaksi=mysqli_fetch_array($laporantransaksi)){
+                                        $idtransaksi=$plaporantransaksi['idtransaksii'];
+                                        $tanggal=$plaporantransaksi['tanggaltransaksi'];
+                                        $jumlaht=$plaporantransaksi['jumlahtransaksi'];
+                                    
+                                       ?>
+                                            <tr>
+                                                <td><?=$idtransaksi;?></td>
+                                                <td><?=$tanggal;?></td>
+                                                <td>Rp <?=number_format($jumlaht);?></td>
+                                            </tr> 
+                                       <?php
+                                       };
+                                       ?>
                                         
                                     </tbody>
                                 </table>

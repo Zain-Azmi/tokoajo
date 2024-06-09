@@ -90,14 +90,15 @@ require 'function.php';
                                     <tbody>
                                        <?php
                                        $get = mysqli_query($koneksi,"SELECT * FROM detail_transaksi WHERE idtransaksii = (SELECT idtransaksii FROM idtransaksi ORDER BY nomor DESC LIMIT 1);");
-                                       
-
+                                       $jumlahtransaksikasir=0;
                                        while ($p=mysqli_fetch_array($get)){
                                         $idproduk=$p['idproduk'];
                                         $namaproduk=$p['namaproduk'];
                                         $harga=$p['harga'];
                                         $jumlah=$p['jumlah'];
-                                        $subtotal=$jumlah*$harga;
+                                        $subtotal=$harga*$jumlah;
+                                        $jumlahtransaksikasir+=$subtotal;
+                                    
                                        ?>
                                             <tr>
                                                 <td><?=$idproduk;?></td>
@@ -113,15 +114,10 @@ require 'function.php';
                                     </tbody>
                                 </table>
                                 <form method="post">
-                                <?php
-                                $getproduk = mysqli_query($koneksi,"select * from transaksi");
-                                while ($pr=mysqli_fetch_array($getproduk)){
-                                    $jumlahtransaksi=$pr['jumlahtransaksi'];
-
-                                };
-                                ?>
+                                
                                 <input type="hidden" name="idtransaksii" value="<?=$idtransaksii;?>">
-                                <input type="hidden" name="jumlahtransaksi" value="<?=$jumlahtransaksi;?>">
+                                <input type="number" name="jumlahtransaksi" value="<?=$jumlahtransaksikasir;?>"disabled>
+                                <br>
                                 <button type="submit" class="btn btn-primary" name="tambahlaporantransaksi">Selesai Transaksi</button>
                                 
                                 </form>
