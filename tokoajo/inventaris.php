@@ -30,7 +30,7 @@ require 'cek.php';
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout.php"><i class="fa-solid fa-power-off"></i> | Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -78,6 +78,24 @@ require 'cek.php';
                             <i class="fa-solid fa-print"></i>
                              Ekspor Data</a>
                             <br><br>
+
+                        <!-- Modal Duplikasi Produk -->
+                        <?php if (!empty($_SESSION['duplikasiproduk'])): ?>
+                            <script>
+                            // Menutup alert duplikasi secara otomatis setelah 5 detik
+                            window.setTimeout(function() {
+                                document.getElementById('duplikasialert').style.display = 'none';
+                            }, <?=$_SESSION['detikalertduplikasi']?> * 1000);
+                        </script>
+                            <div id="duplikasialert" class="alert alert-warning alert-dismissible">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                <strong>Perhatian!</strong> <?= $_SESSION['duplikasiproduk']; ?>
+                            </div>
+                            <?php
+                                // Kosongkan variabel $duplikasiproduk
+                                unset($_SESSION['duplikasiproduk']);
+                            ?>
+                        <?php endif; ?>
 
                             <?php
                                 $ambildatastok = mysqli_query($koneksi,"SELECT * FROM produk WHERE stok < 1");
@@ -231,8 +249,6 @@ require 'cek.php';
             <h4 class="modal-title">Tambahkan Produk</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
-        <!-- Modal body -->
          <form method="post">
             <div class="modal-body">
             <input type="text" name="namaproduk" placeholder="Nama Produk" class="form-control" required>

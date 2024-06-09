@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$duplikasiproduk = '';
+
 //Konek ke Database
 $dbhost = "localhost";
 $dbuser = "root";
@@ -14,6 +16,12 @@ if(isset($_POST['tambahprodukbaru'])){
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
 
+// Pengecekan apakah nama produk sudah ada
+$cekproduk = mysqli_query($koneksi, "SELECT * FROM produk WHERE namaproduk='$namaproduk'");
+$hitung = mysqli_num_rows($cekproduk);
+
+if($hitung < 1){
+    // Jika tidak ada duplikasi produk
     $addtotable = mysqli_query($koneksi,"INSERT INTO produk (namaproduk, harga, stok) VALUES('$namaproduk','$harga','$stok')");
     if ($addtotable){
         header('location:inventaris.php');
@@ -23,7 +31,15 @@ if(isset($_POST['tambahprodukbaru'])){
                 window.location.href = 'inventaris.php';
              </script>";
     }
+} else {
+    // Jika ada duplikasi produk
+    $row = mysqli_fetch_assoc($cekproduk);
+    $namaprodukduplikasi = $row['namaproduk'];
+    $_SESSION['detikalertduplikasi'] = 5;
+    $_SESSION['duplikasiproduk'] = "Produk dengan nama <b>\"$namaprodukduplikasi\"</b> sudah ada. Pesan ini akan ditutup dalam <b>".$_SESSION['detikalertduplikasi']."</b> detik";
+    }
 }
+
 
 // Update Info Barang
 if(isset($_POST['updateproduk'])){
