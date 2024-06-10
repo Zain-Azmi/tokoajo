@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 03:39 PM
+-- Generation Time: Jun 10, 2024 at 06:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -57,25 +57,12 @@ CREATE TABLE `detail_transaksi` (
 --
 
 INSERT INTO `detail_transaksi` (`id_detail`, `idtransaksii`, `idproduk`, `namaproduk`, `harga`, `jumlah`, `sub_total`) VALUES
-(7, 3, 1, 'Pepsi 250ml2', 7000, 1, 7000),
-(8, 4, 1, 'Pepsi 250ml2', 7000, 23, 161000),
-(12, 5, 1, 'Pepsi 250ml2', 7000, 4, 28000),
-(13, 5, 2, 'Coca-Cola 250 ml', 3000, 56, 15000),
-(14, 5, 3, 'Pepsi 250ml1', 3000, 4, 12000),
-(19, 6, 2, 'Coca-Cola 250 ml', 3000, 4, 12000),
-(20, 6, 3, 'Pepsi 250ml1', 3000, 3, 15000),
-(21, 6, 1, 'Pepsi 250ml2', 70000, 4, 280000),
-(22, 7, 1, 'Pepsi 250ml2', 70000, 4, 280000),
-(23, 7, 2, 'Coca-Cola 250 ml', 3000, 3, 9000),
-(24, 7, 3, 'Pepsi 250ml1', 3000, 55, 165000),
-(25, 8, 1, 'Pepsi 250ml2', 70000, 4, 280000),
-(26, 8, 2, 'Coca-Cola 250 ml', 3000, 55, 165000),
-(27, 8, 3, 'Pepsi 250ml1', 3000, 55, 165000),
-(28, 9, 1, 'Pepsi 250ml2', 70000, 6, 420000),
-(29, 10, 1, 'Pepsi 250ml2', 70000, 3, 210000),
-(30, 11, 1, 'Pepsi 250ml', 7000, 2, 14000),
-(31, 11, 2, 'Coca-Cola 250 ml', 3000, 3, 9000),
-(32, 11, 3, 'Sprite 250ml', 3000, 2, 6000);
+(36, 1, 1, 'Pepsi 250ml', 7000, 6, 42000),
+(37, 2, 3, 'Sprite 250ml', 3000, 4, 12000),
+(38, 2, 2, 'Coca-Cola 250 ml', 3000, 5, 15000),
+(39, 3, 1, 'Pepsi 250ml', 7000, 6, 42000),
+(40, 3, 2, 'Coca-Cola 250 ml', 3000, 8, 24000),
+(41, 3, 4, 'Buku Tulis', 4000, 5, 20000);
 
 -- --------------------------------------------------------
 
@@ -94,16 +81,8 @@ CREATE TABLE `idtransaksi` (
 
 INSERT INTO `idtransaksi` (`nomor`, `idtransaksii`) VALUES
 (1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10),
-(11, 11);
+(15, 2),
+(16, 3);
 
 -- --------------------------------------------------------
 
@@ -125,7 +104,7 @@ CREATE TABLE `produk` (
 INSERT INTO `produk` (`idproduk`, `namaproduk`, `harga`, `stok`) VALUES
 (1, 'Pepsi 250ml', 7000, 30),
 (2, 'Coca-Cola 250 ml', 3000, 3),
-(3, 'Sprite 250ml', 3000, 22);
+(4, 'Buku Tulis', 4000, 30);
 
 -- --------------------------------------------------------
 
@@ -144,11 +123,8 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`idtransaksii`, `tanggaltransaksi`, `jumlahtransaksi`) VALUES
-(2, '2024-06-09', 17000),
-(3, '2024-06-09', 7000),
-(10, '2024-06-09', 210000),
-(30, '2024-07-10', 2000),
-(31, '2024-08-14', 20000);
+(1, '2024-06-09', 42000),
+(2, '2024-06-09', 27000);
 
 -- --------------------------------------------------------
 
@@ -159,7 +135,7 @@ INSERT INTO `transaksi` (`idtransaksii`, `tanggaltransaksi`, `jumlahtransaksi`) 
 CREATE TABLE `user` (
   `iduser` int(11) NOT NULL,
   `username` varchar(60) NOT NULL,
-  `password` int(60) NOT NULL
+  `password` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -167,7 +143,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`iduser`, `username`, `password`) VALUES
-(0, 'admin', 123456);
+(1, 'admin', '123456');
 
 --
 -- Indexes for dumped tables
@@ -223,19 +199,25 @@ ALTER TABLE `barangmasuk`
 -- AUTO_INCREMENT for table `detail_transaksi`
 --
 ALTER TABLE `detail_transaksi`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `idtransaksi`
 --
 ALTER TABLE `idtransaksi`
-  MODIFY `nomor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `nomor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idproduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
