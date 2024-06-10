@@ -69,18 +69,39 @@ require 'cek.php';
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Transaksi</h1>
+                        <br>
+                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <i class="fa-solid fa-cart-plus"></i> Tambah Item
+                        </button>
+                        <a href="cetaktransaksi.php" class="btn btn-secondary" target="_blank">
+                        <i class="fa-solid fa-print"></i> Cetak Transaksi</a>
+                             <br><br>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <!-- Button to Open the Modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                    Tambah Produk
-                                </button>
-                                <a href="cetaktransaksi.php" class="btn btn-secondary" target="_blank">
-                            <i class="fa-solid fa-print"></i>
-                             Cetak Transaksi</a>
+                            <i class="fas fa-table me-1"></i>
+                            Rincian Transaksi (<?=$idtransaksii;?>)
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
+
+                                <!-- Alert Cek Stok di Transaksi -->
+                                <?php if (!empty($_SESSION['stokkurang'])): ?>
+                                    <div id="stokkurangalert" class="alert alert-warning alert-dismissible">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                        <strong>Perhatian!</strong> <?= $_SESSION['stokkurang']; ?>
+                                        <?php unset($_SESSION['stokkurang']); ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <!-- Alert Cek Stok di Transaksi -->
+                                <?php if (!empty($_SESSION['transaksisukses'])): ?>
+                                    <div id="stokkurangalert" class="alert alert-success alert-dismissible">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                        <strong>Berhasil!</strong> <?= $_SESSION['transaksisukses']; ?>
+                                        <?php unset($_SESSION['transaksisukses']); ?>
+                                    </div>
+                                <?php endif; ?>
+
                                     <thead>
                                         <tr>
                                             <th>ID Produk</th>
@@ -185,15 +206,19 @@ require 'cek.php';
                                 </table>
                                 <form method="post">
                                 <h4>Jumlah Pembayaran</h4>
+                                <?php
+                                ?>
                                 <input type="hidden" name="idtransaksii" value="<?=$idtransaksii;?>">
-                                <input type="hidden" name="jumlahtransaksi" value="<?=$jumlahtransaksikasir;?>"disabled>
+                                <input type="hidden" name="jumlahtransaksi" value="<?=$jumlahtransaksikasir;?>">
                                 <input type="text" name="tulisanjumlahtransaksi" value="<?=$tulisanjumlahtransaksikasir;?>"disabled>
                                 <?php
                                 $_SESSION['tulisanjumlahtransaksikasir'] = $tulisanjumlahtransaksikasir;
+                                $_SESSION['idtransaksii'] = $idtransaksii;
                                 ?>
                                 <br>
                                 <br>
-                                <button type="submit" class="btn btn-primary" name="tambahlaporantransaksi">Selesai Transaksi</button>
+                                <button type="submit" class="btn btn-primary" name="tambahlaporantransaksi">
+                                <i class="fa-solid fa-check-to-slot"></i> Selesai Transaksi</button>
                                 
                                 </form>
                             </div>

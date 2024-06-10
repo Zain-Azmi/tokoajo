@@ -90,29 +90,80 @@ if(isset($_POST['tambahprodukkasir'])){
     $jumlah = $_POST['jumlah'];
     $subtotal =$harga*$jumlah;
 
-    $addtotable = mysqli_query($koneksi,"insert into detail_transaksi (idtransaksii,idproduk,namaproduk, harga, jumlah,sub_total) values('$idtransaksii','$idproduk','$namaproduk','$harga','$jumlah',$subtotal)");
-    if ($addtotable){
-        header('location:index.php');
+    $stokcek = mysqli_query($koneksi,"SELECT stok FROM produk WHERE idproduk='$idproduk'");
+    $stok = mysqli_fetch_array($stokcek);
+        $jumlahstok = $stok['stok'];
+
+    if ($jumlah > $jumlahstok) {
+        $_SESSION['stokkurang'] = "Stok tidak mencukupi untuk produk <b>\"$namaproduk\"</b>! Sisa stok: <b>$jumlahstok</b>";
     } else {
-        echo 'Gagal Menambahkan Barang';
-    }
+        $addtotable = mysqli_query($koneksi,"insert into detail_transaksi (idtransaksii,idproduk,namaproduk, harga, jumlah,sub_total) values('$idtransaksii','$idproduk','$namaproduk','$harga','$jumlah',$subtotal)");
+        if ($addtotable){
+            header('location:index.php');
+        } else {
+            echo 'Gagal Menambahkan Barang ke Transaksi';
+        }
+    }    
 
 }
+
 // Masukin Data Ke Tabel Transaksi
 if(isset($_POST['tambahlaporantransaksi'])){
-    $jumlahlaporan =$jumlahtransaksi;
     $idtransaksii = $_POST['idtransaksii'];
-    $addtotable = mysqli_query($koneksi,"insert into transaksi (idtransaksii,jumlahtransaksi) values('$idtransaksii','$jumlahlaporan')");
-    if ($addtotable){
-        $angkaidtransaksii=$idtransaksii+1;
-    $addtotableidtransaksii = mysqli_query($koneksi,"insert into idtransaksi (idtransaksii) values('$angkaidtransaksii')");
-        header('location:index.php');
-        $jumlahtransaksi=0;
-    } else {
-        echo 'Gagal Menambahkan Barang';
+    $jumlahtransaksi = $_POST['jumlahtransaksi'];
+
+    // Ambil Semua Produk di Transaksi (id)
+    $getproduk = mysqli_query($koneksi, "SELECT namaproduk, jumlah FROM detail_transaksi WHERE idtransaksii='$idtransaksii'");
+    $stokcukup = true;
+
+    // Cek Stok dari Produk Tadi
+    while($p = mysqli_fetch_array($getproduk)){
+        $namaproduk = $p['namaproduk'];
+        $jumlah = $p['jumlah'];
+        
+        $cekstok = mysqli_query($koneksi, "SELECT stok FROM produk WHERE namaproduk='$namaproduk'");
+        $data = mysqli_fetch_array($cekstok);
+        $stok = $data['stok'];
+
+        if($stok < $jumlah){
+            $stokcukup = false;
+            break;
+        }
     }
 
+    if($stokcukup){
+        // Kurangi Stok dari Tiap Produk
+        mysqli_data_seek($getproduk, 0); // Reset Query
+
+        while($p = mysqli_fetch_array($getproduk)){
+            $namaproduk = $p['namaproduk'];
+            $jumlah = $p['jumlah'];
+
+            $cekstok = mysqli_query($koneksi, "SELECT stok FROM produk WHERE namaproduk='$namaproduk'");
+            $data = mysqli_fetch_array($cekstok);
+            $stok = $data['stok'];
+            $stokbaru = $stok - $jumlah;
+
+            $updatestok = mysqli_query($koneksi, "UPDATE produk SET stok='$stokbaru' WHERE namaproduk='$namaproduk'");
+        }
+
+        // Tambahkan transaksi ke tabel transaksi
+        $addtotable = mysqli_query($koneksi, "INSERT INTO transaksi (idtransaksii, jumlahtransaksi) VALUES ('$idtransaksii', '$jumlahtransaksi')");
+        
+        if($addtotable){
+            // Tambahkan idtransaksii ke tabel idtransaksi
+            $angkaidtransaksii = $idtransaksii + 1;
+            $addtotableidtransaksii = mysqli_query($koneksi, "INSERT INTO idtransaksi (idtransaksii) VALUES ('$angkaidtransaksii')");
+            header('location:index.php');
+        } else {
+            echo 'Gagal Menambahkan Transaksi';
+        }
+    } else {
+        
+    }
 }
+
+
 // Menghapus Barang dari detail transaksi
 if(isset($_POST['hapusprodukdetailtransaksi'])){
     $idproduk = $_POST['idproduk'];

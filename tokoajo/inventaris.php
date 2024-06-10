@@ -79,7 +79,7 @@ require 'cek.php';
                              Cetak Data Produk</a>
                             <br><br>
 
-                        <!-- Modal Duplikasi Produk -->
+                        <!-- Alert Duplikasi Produk -->
                         <?php if (!empty($_SESSION['duplikasiproduk'])): ?>
                             <script>
                             // Menutup alert duplikasi secara otomatis setelah 5 detik

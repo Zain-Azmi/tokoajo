@@ -1,5 +1,6 @@
 <?php
 require 'function.php';
+require 'cek.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,11 +48,11 @@ require 'function.php';
                             </a>
                             <a class="nav-link" href="inventaris.php">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-box-open"></i></div>
-                                <b>Inventaris</b>
+                                Inventaris
                             </a>
                             <a class="nav-link" href="laporan.php">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
-                                Laporan
+                                <b>Laporan</b>
                             </a>
                         </div>
                     </div>
@@ -68,6 +69,7 @@ require 'function.php';
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Laporan Transaksi</h1>
+                        <br>
                         <a href="cetaklaporantransaksi.php" class="btn btn-secondary" target="_blank">
                             <i class="fa-solid fa-print"></i>
                              Cetak Laporan Transaksi</a>

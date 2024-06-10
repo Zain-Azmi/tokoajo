@@ -1,12 +1,13 @@
 <?php
 require 'function.php';
+require 'cek.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Transaksi</title>
+    <title>Laporan Transaksi Toko Ajo Lpn</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
@@ -14,7 +15,7 @@ require 'function.php';
 <body>
 <div class="container">
     <br>
-    <h2>Laporan Transaksi</h2>
+    <h2>Laporan Transaksi Toko Ajo Lpn</h2>
     <br>
     <div class="data-tables datatable-dark">
     <table id="datatablesSimple" class="table table-striped">
@@ -70,23 +71,18 @@ $(document).ready(function() {
         buttons: [
             {
                 extend: 'copy',
-                title: 'Laporan Transaksi'
             },
             {
                 extend: 'csv',
-                title: 'Laporan Transaksi'
             },
             {
                 extend: 'excel',
-                title: 'Laporan Transaksi'
             },
             {
                 extend: 'pdf',
-                title: 'Laporan Transaksi'
             },
             {
                 extend: 'print',
-                title: 'Laporan Transaksi'
             }
         ]
     });
