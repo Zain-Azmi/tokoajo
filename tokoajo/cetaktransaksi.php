@@ -1,5 +1,6 @@
 <?php
 require 'function.php';
+require 'cek.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,14 +9,17 @@ require 'function.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaksi</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
 </head>
 <body>
     
 <?php
 $tulisanjumlahtransaksikasir = $_SESSION['tulisanjumlahtransaksikasir'];
-?>,
+?>
 
 <div class="container">
     <br>
@@ -50,20 +54,22 @@ $tulisanjumlahtransaksikasir = $_SESSION['tulisanjumlahtransaksikasir'];
                     <td>Rp <?php echo number_format($subtotal);?></td>
                 </tr>
                 <?php
-                };
+                }
                 ?>
             </tbody>
+            <tfoot>
+                    <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <td style="text-align:right"><strong>Jumlah Pembayaran:</strong></td>
+                    <td><strong><?php echo($tulisanjumlahtransaksikasir); ?></strong></td>
+                </tr>
+            </tfoot>
         </table>
-        <h4>Jumlah Pembayaran</h4>
-        <input type="hidden" name="idtransaksii" value="<?=$idtransaksii;?>">
-        <input type="hidden" name="jumlahtransaksi" value="<?=$jumlahtransaksikasir;?>"disabled>
-        <input type="text" name="tulisanjumlahtransaksi" value="<?=$tulisanjumlahtransaksikasir;?>"disabled>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
@@ -75,76 +81,56 @@ $tulisanjumlahtransaksikasir = $_SESSION['tulisanjumlahtransaksikasir'];
 
 <script>
 $(document).ready(function() {
+    var tulisanjumlahtransaksikasir = <?php echo json_encode($tulisanjumlahtransaksikasir); ?>;
+
     $('#datatablesSimple').DataTable({
         dom: 'Bfrtip',
         buttons: [
             {
                 extend: 'copy',
+                className: 'btn btn-secondary',
                 title: 'Transaksi',
-                customize: function (win) {
-                    $(win.document.body)
-                        .prepend(
-                            '<h4>Jumlah Pembayaran: <?php echo $tulisanjumlahtransaksikasir; ?></h4>'
-                        );
-
-                    $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-                }
+                footer: true
             },
             {
                 extend: 'csv',
+                className: 'btn btn-secondary',
                 title: 'Transaksi',
-                customize: function (win) {
-                    $(win.document.body)
-                        .prepend(
-                            '<h4>Jumlah Pembayaran: <?php echo $tulisanjumlahtransaksikasir; ?></h4>'
-                        );
-
-                    $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-                }
+                footer: true
             },
             {
                 extend: 'excel',
+                className: 'btn btn-secondary',
                 title: 'Transaksi',
-                customize: function (win) {
-                    $(win.document.body)
-                        .prepend(
-                            '<h4>Jumlah Pembayaran: <?php echo $tulisanjumlahtransaksikasir; ?></h4>'
-                        );
-
-                    $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
-                }
+                footer: true
             },
             {
                 extend: 'pdf',
+                className: 'btn btn-secondary',
                 title: 'Transaksi',
-                customize: function (doc) {
-                    doc.content.splice(0, 0, {
-                        text: 'Jumlah Pembayaran: <?php echo $tulisanjumlahtransaksikasir; ?>',
-                        margin: [0, 0, 0, 12]
-                    });
-                }
+                footer:true
+                // customize: function(doc) {
+                //     doc.content[1].table.body.push(
+                //         [
+                //             { text: ' ', colSpan: 4 }, '', '', '', 
+                //             { text: 'Jumlah Pembayaran: ' + tulisanjumlahtransaksikasir, bold: true }
+                //         ]
+                //     );
+                // }
             },
             {
                 extend: 'print',
+                className: 'btn btn-secondary',
                 title: 'Transaksi',
-                customize: function (win) {
-                    $(win.document.body)
-                        .prepend(
-                            '<h4>Jumlah Pembayaran: <?php echo $tulisanjumlahtransaksikasir; ?></h4>'
-                        );
-
-                    $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
+                customize: function(win) {
+                    var lastRow = '<tr>' +
+                                  '<td colspan="4" style="text-align:right"><strong>Jumlah Pembayaran:</strong></td>' +
+                                  '<td><strong>' + tulisanjumlahtransaksikasir + '</strong></td>' +
+                                  '</tr>';
+                    $(win.document.body).find('table').append('<tfoot>' + lastRow + '</tfoot>');
                 }
             }
-        ]
+        ],
     });
 });
 </script>
