@@ -81,7 +81,7 @@ require 'cek.php';
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
+                                        <i class="fas fa-chart-bar me-1"></i>
                                         Laporan Bulanan
                                     </div>
                                     <div class="card-body"><canvas id="DiagramBar" width="100%" height="40"></canvas></div>
@@ -90,7 +90,7 @@ require 'cek.php';
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
+                                        <i class="fas fa-chart-line me-1"></i>
                                         Laporan Harian
                                     </div>
                                     <div class="card-body"><canvas id="DiagramGaris" width="100%" height="40"></canvas></div>
