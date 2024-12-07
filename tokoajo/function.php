@@ -99,7 +99,7 @@ if(isset($_POST['tambahprodukkasir'])){
     } else {
         $addtotable = mysqli_query($koneksi,"insert into detail_transaksi (idtransaksii,idproduk,namaproduk, harga, jumlah,sub_total) values('$idtransaksii','$idproduk','$namaproduk','$harga','$jumlah',$subtotal)");
         if ($addtotable){
-            header('location:index.php');
+            header('location:transaksi.php');
         } else {
             echo 'Gagal Menambahkan Barang ke Transaksi';
         }
@@ -154,7 +154,7 @@ if(isset($_POST['tambahlaporantransaksi'])){
             // Tambahkan idtransaksii ke tabel idtransaksi
             $angkaidtransaksii = $idtransaksii + 1;
             $addtotableidtransaksii = mysqli_query($koneksi, "INSERT INTO idtransaksi (idtransaksii) VALUES ('$angkaidtransaksii')");
-            header('location:index.php');
+            header('location:transaksi.php');
         } else {
             echo 'Gagal Menambahkan Transaksi';
         }
@@ -170,11 +170,11 @@ if(isset($_POST['hapusprodukdetailtransaksi'])){
 
     $hapus = mysqli_query($koneksi,"DELETE FROM detail_transaksi WHERE idproduk='$idproduk'and idtransaksii=(SELECT idtransaksii FROM detail_transaksi ORDER BY idtransaksii DESC LIMIT 1);");
     if ($hapus){
-        header('location:index.php');
+        header('location:transaksi.php');
     } else {
         echo "<script type='text/javascript'>
                 alert('Gagal Menghapus Produk!');
-                window.location.href = 'index.php';
+                window.location.href = 'transaksi.php';
              </script>";
     }
 }
@@ -186,11 +186,11 @@ if(isset($_POST['updateprodukdetailtransaksi'])){
 
     $update = mysqli_query($koneksi,"UPDATE detail_transaksi SET jumlah='$jumlah'WHERE idproduk='$idproduk'and idtransaksii=(SELECT idtransaksii FROM detail_transaksi ORDER BY idtransaksii DESC LIMIT 1);");
     if ($update){
-        header('location:index.php');
+        header('location:transaksi.php');
     } else {
         echo "<script type='text/javascript'>
                 alert('Gagal Meng-Update Produk!');
-                window.location.href = 'index.php';
+                window.location.href = 'transaksi.php';
              </script>";
     }
 }

@@ -90,7 +90,7 @@ function showAlert($type, $message) {
 
                                 <div class="card-body">
                                     <form method="post">
-                                    <div class="form-floating mb-4">
+                                    <div class="form-floating m b-4">
                                                 <input class="form-control <?= $usernamesalah ?>" name="username" id="inputUsername" type="text" placeholder="Username" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '' ?>" required/>
                                                 <label for="inputEmail">Username</label>
                                             </div>
@@ -122,7 +122,7 @@ function showAlert($type, $message) {
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                        <div class="text-muted">Copyright &copy; Toko Ajo Lpn 2024</div>
                     </div>
                 </div>
             </footer>
